@@ -43,7 +43,7 @@ const resetForm = (): void => {
 // Submit handler to send the form data via POST
 async function handleSubmit(): Promise<void> {
   try {
-    const response = await fetch(import.meta.env.VITE_SOME_KEY, {
+    const response = await fetch(import.meta.env.VITE_API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
@@ -144,8 +144,9 @@ async function handleSubmit(): Promise<void> {
         <input
           id="anoSaida"
           v-model="form.dataSaida"
+          placeholder="Ex: 2005"
           class="p-2 w-full"
-          type="date"
+          type="text"
         />
       </div>
 
