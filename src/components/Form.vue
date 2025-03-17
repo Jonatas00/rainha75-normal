@@ -19,7 +19,7 @@ const { form, resetForm } = newFormData({
 const handleSubmit = async () => {
   try {
     await API_POST_METHOD(
-      "https://81b5-186-231-48-157.ngrok-free.app/add-data",
+      "google-nbdx5cskn-paulo-henriques-projects-a0c5f115.vercel.app/add-data",
       form.value
     );
 
