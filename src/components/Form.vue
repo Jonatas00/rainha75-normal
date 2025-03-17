@@ -2,8 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { reactive } from "vue";
 
-// Criando um objeto reativo para armazenar os dados do formulário
-const form = reactive({
+const form = reactive<Record<string, string>>({
   cpf: "",
   nome: "",
   whatsapp: "",
@@ -14,7 +13,6 @@ const form = reactive({
   filhoMatriculado: "",
 });
 
-// Função para resetar o formulário
 const resetForm = () => {
   Object.keys(form).forEach((key) => {
     form[key] = "";
