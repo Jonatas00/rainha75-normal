@@ -16,7 +16,7 @@ const { form, resetForm } = newFormData({
   filhoMatriculado: "",
 });
 
-async function enviarDados() {
+async function handleSubmit() {
   try {
     const response = await fetch(import.meta.env.VITE_SOME_KEY, {
       method: "POST",
