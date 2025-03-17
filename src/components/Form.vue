@@ -2,11 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { reactive } from "vue";
 
-// Definindo um tipo para o formulário
+// Define the type for form data
 type FormType = {
   cpf: string;
   nome: string;
-  whatsapp: number;
+  whatsapp: string; // Changed to string to match the input data
   email: string;
   dataFormacao: string;
   dataSaida: string;
@@ -14,11 +14,11 @@ type FormType = {
   filhoMatriculado: string;
 };
 
-// Criando um objeto reativo com tipagem correta
+// Create a reactive form object with proper typing
 const form = reactive<FormType>({
   cpf: "",
   nome: "",
-  whatsapp: 0, // Alterado para number
+  whatsapp: "",
   email: "",
   dataFormacao: "",
   dataSaida: "",
@@ -26,12 +26,12 @@ const form = reactive<FormType>({
   filhoMatriculado: "",
 });
 
-// Resetando os valores do formulário
-const resetForm = () => {
+// Function to reset the form values
+const resetForm = (): void => {
   Object.assign(form, {
     cpf: "",
     nome: "",
-    whatsapp: 0, // Reseta como número
+    whatsapp: "",
     email: "",
     dataFormacao: "",
     dataSaida: "",
@@ -40,27 +40,24 @@ const resetForm = () => {
   });
 };
 
-// Enviando os dados via POST
-async function handleSubmit() {
+// Submit handler to send the form data via POST
+async function handleSubmit(): Promise<void> {
   try {
     const response = await fetch(import.meta.env.VITE_SOME_KEY, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: form,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
     });
 
     if (!response.ok) {
-      alert(`Erro: ${response.status} - ${response.statusText}`);
+      alert(`Error: ${response.status} - ${response.statusText}`);
     }
 
-    const resultado = await response.json();
-    console.log("Dados enviados com sucesso:", resultado);
-
+    const result = await response.json();
+    console.log("Data sent successfully:", result);
     resetForm();
-  } catch (erro) {
-    console.error("Erro ao enviar os dados:", erro);
+  } catch (error) {
+    console.error("Error sending data:", error);
     resetForm();
   }
 }
@@ -108,11 +105,11 @@ async function handleSubmit() {
         <label for="whatsapp">WhatsApp</label>
         <input
           id="whatsapp"
-          v-model.number="form.whatsapp"
+          v-model="form.whatsapp"
           class="p-2 w-full"
-          placeholder="DDD + número"
+          placeholder="ddd + número"
           required
-          type="number"
+          type="text"
         />
       </div>
 
@@ -122,7 +119,7 @@ async function handleSubmit() {
           id="email"
           v-model="form.email"
           class="p-2 w-full"
-          placeholder="Email"
+          placeholder="email@gmail.com"
           required
           type="email"
         />
@@ -155,17 +152,17 @@ async function handleSubmit() {
       <div>
         <label for="possuiFilho">Possui filho matriculado no Rainha?</label>
         <select
+          id="possuiFilho"
           v-model="form.filhoMatriculado"
           class="p-2 w-full border block"
-          id="possuiFilho"
           :class="{
             'text-neutral-400': !form.filhoMatriculado,
             'text-black': form.filhoMatriculado,
           }"
         >
           <option value="" disabled selected>Selecione uma opção</option>
-          <option value="Sim" class="text-black">Sim</option>
-          <option value="Não" class="text-black">Não</option>
+          <option value="Sim">Sim</option>
+          <option value="Não">Não</option>
         </select>
       </div>
 
