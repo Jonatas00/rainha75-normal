@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { Button } from "@/components/ui/button";
 
-const { API_POST_METHOD } = useApi();
-
 const { form } = newFormData({
   cpf: "",
   nome: "",
