@@ -23,7 +23,7 @@ async function handleSubmit() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(form),
+      body: form,
     });
 
     if (!response.ok) {
