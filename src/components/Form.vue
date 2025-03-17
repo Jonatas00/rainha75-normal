@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import { Button } from "@/components/ui/button";
+import { reactive } from "vue";
 
-const { form } = newFormData({
+// Criando um objeto reativo para armazenar os dados do formulário
+const form = reactive({
   cpf: "",
   nome: "",
   whatsapp: "",
@@ -12,12 +14,14 @@ const { form } = newFormData({
   filhoMatriculado: "",
 });
 
+// Função para resetar o formulário
 const resetForm = () => {
   Object.keys(form).forEach((key) => {
     form[key] = "";
   });
 };
 
+// Função para enviar os dados via POST
 async function handleSubmit() {
   try {
     const response = await fetch(import.meta.env.VITE_SOME_KEY, {
@@ -25,7 +29,7 @@ async function handleSubmit() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: form,
+      body: JSON.stringify(form), // Corrigindo para JSON.stringify()
     });
 
     if (!response.ok) {
@@ -38,11 +42,11 @@ async function handleSubmit() {
     resetForm();
   } catch (erro) {
     console.error("Erro ao enviar os dados:", erro);
-
     resetForm();
   }
 }
 </script>
+
 <template>
   <div class="shadow-lg bg-white p-4 rounded-lg">
     <form class="space-y-4" @submit.prevent="handleSubmit">
@@ -85,7 +89,7 @@ async function handleSubmit() {
           id="whatsapp"
           v-model="form.whatsapp"
           class="p-2 w-full"
-          placeholder="ddd + número"
+          placeholder="DDD + número"
           required
           type="text"
         />
@@ -117,8 +121,8 @@ async function handleSubmit() {
       </div>
 
       <div>
-        <label for="anoSaida"
-          >Caso não tenha terminado o ensino médio no Rainha, qual ano saiu do
+        <label for="anoSaida">
+          Caso não tenha terminado o ensino médio no Rainha, qual ano saiu do
           colégio?
         </label>
         <input
@@ -131,7 +135,7 @@ async function handleSubmit() {
       </div>
 
       <div>
-        <label for="possuiFilho"> Possui filho matriculado no Rainha? </label>
+        <label for="possuiFilho">Possui filho matriculado no Rainha?</label>
         <select
           v-model="form.filhoMatriculado"
           class="p-2 w-full border block"
@@ -141,18 +145,17 @@ async function handleSubmit() {
             'text-black': form.filhoMatriculado,
           }"
         >
-          <option :value="form.filhoMatriculado" selected disabled>
-            Possui filho matriculado no Rainha?
-          </option>
+          <option value="" disabled selected>Selecione uma opção</option>
           <option value="Sim" class="text-black">Sim</option>
           <option value="Não" class="text-black">Não</option>
         </select>
       </div>
 
-      <Button class="flex w-50 hover:bg-[#415272]"> Enviar </Button>
+      <Button class="flex w-50 hover:bg-[#415272]">Enviar</Button>
     </form>
   </div>
 </template>
+
 <style scoped>
 input,
 option,
@@ -162,21 +165,6 @@ select {
 input::placeholder {
   @apply text-neutral-400;
 }
-
-input select {
-  @apply text-neutral-400;
-  border-radius: calc(var(--radius) - 2px);
-  border-width: 1px;
-  --tw-bg-opacity: 1;
-  background-color: rgb(250 250 250 / var(--tw-bg-opacity, 1));
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-
-  value {
-    color: black;
-  }
-}
-
 option[disabled] {
   @apply text-neutral-300;
 }
