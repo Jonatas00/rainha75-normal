@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-import { useApi } from "@/composables/useApi.ts";
-import { newFormData } from "@/composables/useForm.ts";
 import { Button } from "@/components/ui/button";
 
 const { API_POST_METHOD } = useApi();
 
-const { form, resetForm } = newFormData({
+const { form } = newFormData({
   cpf: "",
   nome: "",
   whatsapp: "",
@@ -15,6 +13,12 @@ const { form, resetForm } = newFormData({
   dataNasc: "",
   filhoMatriculado: "",
 });
+
+const resetForm = () => {
+  Object.keys(form).forEach((key) => {
+    form[key] = "";
+  });
+};
 
 async function handleSubmit() {
   try {
@@ -32,8 +36,12 @@ async function handleSubmit() {
 
     const resultado = await response.json();
     console.log("Dados enviados com sucesso:", resultado);
+
+    resetForm();
   } catch (erro) {
     console.error("Erro ao enviar os dados:", erro);
+
+    resetForm();
   }
 }
 </script>
