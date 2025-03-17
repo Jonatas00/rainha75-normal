@@ -2,10 +2,23 @@
 import { Button } from "@/components/ui/button";
 import { reactive } from "vue";
 
-const form = reactive<Record<string, string>>({
+// Definindo um tipo para o formulário
+type FormType = {
+  cpf: string;
+  nome: string;
+  whatsapp: number;
+  email: string;
+  dataFormacao: string;
+  dataSaida: string;
+  dataNasc: string;
+  filhoMatriculado: string;
+};
+
+// Criando um objeto reativo com tipagem correta
+const form = reactive<FormType>({
   cpf: "",
   nome: "",
-  whatsapp: "",
+  whatsapp: 0, // Alterado para number
   email: "",
   dataFormacao: "",
   dataSaida: "",
@@ -13,13 +26,21 @@ const form = reactive<Record<string, string>>({
   filhoMatriculado: "",
 });
 
+// Resetando os valores do formulário
 const resetForm = () => {
-  Object.keys(form).forEach((key) => {
-    form[key] = "";
+  Object.assign(form, {
+    cpf: "",
+    nome: "",
+    whatsapp: 0, // Reseta como número
+    email: "",
+    dataFormacao: "",
+    dataSaida: "",
+    dataNasc: "",
+    filhoMatriculado: "",
   });
 };
 
-// Função para enviar os dados via POST
+// Enviando os dados via POST
 async function handleSubmit() {
   try {
     const response = await fetch(import.meta.env.VITE_SOME_KEY, {
@@ -27,7 +48,10 @@ async function handleSubmit() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(form), // Corrigindo para JSON.stringify()
+      body: JSON.stringify({
+        ...form,
+        whatsapp: String(form.whatsapp), // Convertendo para string antes de enviar
+      }),
     });
 
     if (!response.ok) {
@@ -59,6 +83,7 @@ async function handleSubmit() {
           type="text"
         />
       </div>
+
       <div>
         <label for="nome">Nome</label>
         <input
@@ -70,6 +95,7 @@ async function handleSubmit() {
           type="text"
         />
       </div>
+
       <div>
         <label for="dataNascimento">Data de Nascimento</label>
         <input
@@ -85,11 +111,11 @@ async function handleSubmit() {
         <label for="whatsapp">WhatsApp</label>
         <input
           id="whatsapp"
-          v-model="form.whatsapp"
+          v-model.number="form.whatsapp"
           class="p-2 w-full"
           placeholder="DDD + número"
           required
-          type="text"
+          type="number"
         />
       </div>
 
@@ -111,24 +137,20 @@ async function handleSubmit() {
           id="anoFormacao"
           v-model="form.dataFormacao"
           class="p-2 w-full"
-          max="2024"
-          min="1950"
           placeholder="Ex: 2005"
-          type="number"
+          type="text"
         />
       </div>
 
       <div>
         <label for="anoSaida">
-          Caso não tenha terminado o ensino médio no Rainha, qual ano saiu do
-          colégio?
+          Caso não tenha terminado o ensino médio no Rainha, qual ano saiu do colégio?
         </label>
         <input
           id="anoSaida"
           v-model="form.dataSaida"
           class="p-2 w-full"
-          placeholder="Ex: 2005"
-          type="number"
+          type="date"
         />
       </div>
 
