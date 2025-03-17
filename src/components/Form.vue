@@ -19,7 +19,7 @@ const { form, resetForm } = newFormData({
 const handleSubmit = async () => {
   try {
     await API_POST_METHOD(
-      "google-8olm8hst9-paulo-henriques-projects-a0c5f115.vercel.app/add-data",
+      "google-api-xi.vercel.app/add-data",
       form.value
     );
 
