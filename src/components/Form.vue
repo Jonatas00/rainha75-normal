@@ -16,16 +16,26 @@ const { form, resetForm } = newFormData({
   filhoMatriculado: "",
 });
 
-const handleSubmit = async () => {
+async function enviarDados() {
   try {
-    await API_POST_METHOD(import.meta.env.VITE_API_URL, form.value);
+    const response = await fetch(import.meta.env.VITE_SOME_KEY, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
 
-    alert("Agradecemos pelas informações");
-    resetForm();
-  } catch (err: any | object) {
-    alert(err.message);
+    if (!response.ok) {
+      alert(`Erro: ${response.status} - ${response.statusText}`);
+    }
+
+    const resultado = await response.json();
+    console.log("Dados enviados com sucesso:", resultado);
+  } catch (erro) {
+    console.error("Erro ao enviar os dados:", erro);
   }
-};
+}
 </script>
 <template>
   <div class="shadow-lg bg-white p-4 rounded-lg">
