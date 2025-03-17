@@ -48,10 +48,7 @@ async function handleSubmit() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        ...form,
-        whatsapp: String(form.whatsapp), // Convertendo para string antes de enviar
-      }),
+      body: form,
     });
 
     if (!response.ok) {
@@ -144,7 +141,8 @@ async function handleSubmit() {
 
       <div>
         <label for="anoSaida">
-          Caso não tenha terminado o ensino médio no Rainha, qual ano saiu do colégio?
+          Caso não tenha terminado o ensino médio no Rainha, qual ano saiu do
+          colégio?
         </label>
         <input
           id="anoSaida"
