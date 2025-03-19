@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import AlertComponent from "@/components/AlertComponent.vue";
-import ModalComponent from "./ModalComponent.vue"; // Import the modal
 import { Button } from "@/components/ui/button";
 import { formatCPF, isValidCPF } from "@/utils/cpf";
 import { formatWhatsApp } from "@/utils/whatsapp";
 import { reactive, ref } from "vue";
+import type ModalComponent from "./ModalComponent.vue";
 
 // Define the type for the form
 type FormType = {
