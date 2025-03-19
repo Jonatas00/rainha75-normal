@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import AlertComponent from "@/components/AlertComponent.vue";
+import ModalComponent from "./ModalComponent.vue"; // Import the modal
 import { Button } from "@/components/ui/button";
 import { formatCPF, isValidCPF } from "@/utils/cpf";
 import { formatWhatsApp } from "@/utils/whatsapp";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 
-// Definição do tipo do formulário
+// Define the type for the form
 type FormType = {
   cpf: string;
   nome: string;
@@ -17,7 +18,7 @@ type FormType = {
   filhoMatriculado: string;
 };
 
-// Estado do formulário
+// Form state
 const form = reactive<FormType>({
   cpf: "",
   nome: "",
@@ -29,14 +30,14 @@ const form = reactive<FormType>({
   filhoMatriculado: "",
 });
 
-// Estado do alerta
+// Alert state
 const alertState = reactive({
   error: false,
   message: "",
   statusCode: 0,
 });
 
-// Reset do formulário e alerta
+// Reset form and alert state
 const resetForm = (): void => {
   Object.assign(form, {
     cpf: "",
@@ -49,6 +50,9 @@ const resetForm = (): void => {
     filhoMatriculado: "",
   });
 };
+
+// Reference for the ModalComponent
+const modalRef = ref<InstanceType<typeof ModalComponent> | null>(null);
 
 async function handleSubmit(): Promise<void> {
   // Reset alert state before request
@@ -83,6 +87,8 @@ async function handleSubmit(): Promise<void> {
       alertState.message = "Formulário enviado com sucesso!";
       alertState.statusCode = response.status;
 
+      // Use optional chaining to avoid errors if modalRef.value is null
+      modalRef.value?.openModal();
       resetForm();
     } else {
       alertState.error = true;
@@ -100,14 +106,15 @@ async function handleSubmit(): Promise<void> {
 
 const updateCPF = (): void => {
   form.cpf = formatCPF(form.cpf);
-}
+};
+
 const updateWhatsApp = (): void => {
   form.whatsapp = formatWhatsApp(form.whatsapp);
 };
 </script>
 
 <template>
-
+  <!-- Alert Component -->
   <AlertComponent v-if="alertState.message" :message="alertState.message" :statusCode="alertState.statusCode" />
 
   <div class="shadow-lg bg-white p-4 rounded-lg">
@@ -167,6 +174,9 @@ const updateWhatsApp = (): void => {
       <Button class="flex w-50 hover:bg-[#415272]">Enviar</Button>
     </form>
   </div>
+
+  <!-- Include ModalComponent with ref -->
+  <ModalComponent ref="modalRef" />
 </template>
 
 <style scoped>
