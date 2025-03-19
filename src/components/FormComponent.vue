@@ -122,8 +122,8 @@ const updateWhatsApp = (): void => {
 
       <div>
         <label for="cpf">CPF</label>
-        <input maxlength="14" id="cpf" v-model="form.cpf" @input="updateCPF" class="p-2 w-full"
-          placeholder="000.000.000-00" required type="text" inputmode="numeric" />
+        <input id="cpf" v-model="form.cpf" @input="updateCPF" class="p-2 w-full" placeholder="000.000.000-00" required
+          type="text" inputmode="numeric" />
       </div>
 
       <div>

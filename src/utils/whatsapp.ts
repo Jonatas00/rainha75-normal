@@ -1,10 +1,14 @@
 export function formatWhatsApp(input: string): string {
-  // Remover caracteres não numéricos
+  // Remove non-numeric characters
   const numbersOnly = input.replace(/\D/g, "");
 
-  // Formatar o número no padrão "11 91234-5678"
-  if (numbersOnly.length === 11) {
-    return `${numbersOnly.slice(0, 2)} ${numbersOnly.slice(2, 7)}-${numbersOnly.slice(7)}`;
+  // Limit to 11 digits (DDD + phone number)
+  const trimmedNumber = numbersOnly.slice(0, 11);
+
+  // Format as "XX XXXXX-XXXX" for 11-digit numbers
+  if (trimmedNumber.length === 11) {
+    return `${trimmedNumber.slice(0, 2)} ${trimmedNumber.slice(2, 7)}-${trimmedNumber.slice(7)}`;
   }
-  return numbersOnly;
+
+  return trimmedNumber;
 }
