@@ -150,16 +150,16 @@ const updateWhatsApp = (): void => {
 
       <div>
         <label for="anoFormacao">Ano que se formou no Rainha</label>
-        <input id="anoFormacao" v-model="form.dataFormacao" class="p-2 w-full" placeholder="Ex: 2005" type="text"
-          inputmode="numeric" />
+        <input id="anoFormacao" max="2024" v-model="form.dataFormacao" class="p-2 w-full" placeholder="Ex: 2005"
+          type="number" inputmode="numeric" required />
       </div>
 
       <div>
         <label for="anoSaida">
           Caso não tenha terminado o ensino médio no Rainha, qual ano saiu do colégio?
         </label>
-        <input id="anoSaida" v-model="form.dataSaida" placeholder="Ex: 2005" class="p-2 w-full" type="text"
-          inputmode="numeric" />
+        <input id="anoSaida" max="2024" v-model="form.dataSaida" placeholder="Ex: 2005" class="p-2 w-full" type="number"
+          inputmode="numeric" required />
       </div>
 
       <div>
