@@ -6,7 +6,7 @@
       </a>
       <h1 class="text-center text-2xl text-primary font-medium">MANHÃ COM EGRESSOS</h1>
     </div>
-    <div class="px-5 text-justify py-8 space-y-1">
+    <div class="px-5 text-justify py-8 space-y-1 max-w-[80%] lg:max-w mx-auto">
       <p>É com alegria que esse ano fazemos 75 anos de história!</p>
       <p>
         Para celebrar esse momento tão especial, convidamos você que fez parte

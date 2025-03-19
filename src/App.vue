@@ -4,8 +4,8 @@ import Form from "./components/FormComponent.vue";
 </script>
 
 <template>
-  <div class="md:max-w-[90%] lg:max-w-[80%] m-auto">
-    <Title class="my-auto" />
+  <div class="md:max-w-[90%] lg:max-w-[60%] m-auto">
+    <Title />
     <Form />
   </div>
 </template>
