@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import AlertComponent from "@/components/AlertComponent.vue";
 import { Button } from "@/components/ui/button";
-import { formatCPF } from "@/utils/cpf";
+import { formatCPF, isValidCPF } from "@/utils/cpf";
 import { formatWhatsApp } from "@/utils/whatsapp";
 import { reactive } from "vue";
 
@@ -55,6 +55,13 @@ async function handleSubmit(): Promise<void> {
   alertState.error = false;
   alertState.message = "";
   alertState.statusCode = 0;
+
+  if (!isValidCPF(form.cpf)) {
+    alertState.error = true;
+    alertState.message = "CPF inválido!";
+    alertState.statusCode = 400; // Bad Request
+    return;
+  }
 
   try {
     const response = await fetch(import.meta.env.VITE_API_URL, {
