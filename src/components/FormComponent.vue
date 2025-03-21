@@ -1,141 +1,18 @@
 <script lang="ts" setup>
 import AlertComponent from "@/components/AlertComponent.vue";
 import { Button } from "@/components/ui/button";
-import { formatCPF, isValidCPF } from "@/utils/cpf";
-import { formatWhatsApp } from "@/utils/whatsapp";
-import { reactive, ref } from "vue";
+import { useFormState } from "@/states/formState";
+import { useFormUtils } from "@/utils/formUtils";
+import { ref } from "vue";
 import ModalComponent from "@/components/ModalComponent.vue"; // Correct import
 
-// Define the type for the form
-type FormType = {
-  cpf: string;
-  nome: string;
-  whatsapp: string;
-  email: string;
-  dataFormacao: string;
-  dataSaida: string;
-  dataNasc: string;
-  filhoMatriculado: string;
-};
-
 // Form state
-const form = reactive<FormType>({
-  cpf: "",
-  nome: "",
-  whatsapp: "",
-  email: "",
-  dataFormacao: "",
-  dataSaida: "",
-  dataNasc: "",
-  filhoMatriculado: "",
-});
-
-// Alert state
-const alertState = reactive({
-  error: false,
-  message: "",
-  statusCode: 0,
-});
-
-// Loading state
-const isLoading = ref(false);
-
-// Reset form and alert state
-const resetForm = (): void => {
-  Object.assign(form, {
-    cpf: "",
-    nome: "",
-    whatsapp: "",
-    email: "",
-    dataFormacao: "",
-    dataSaida: "",
-    dataNasc: "",
-    filhoMatriculado: "",
-  });
-};
+const { form, alertState, isLoading, resetForm } = useFormState();
 
 // Reference for the ModalComponent
 const modalRef = ref<InstanceType<typeof ModalComponent> | null>(null);
 
-async function handleSubmit(): Promise<void> {
-  if (isLoading.value) return; // Prevent multiple submissions
-
-  // Reset alert state before request
-  alertState.error = false;
-  alertState.message = "";
-  alertState.statusCode = 0;
-  isLoading.value = true;
-
-  if (form.cpf.replace(/\D/g, "").length !== 11) {
-    alertState.error = true;
-    alertState.message = "CPF deve ter 11 dígitos!";
-    alertState.statusCode = 400; // Bad Request
-    isLoading.value = false;
-    return;
-  }
-
-  if (!isValidCPF(form.cpf)) {
-    alertState.error = true;
-    alertState.message = "CPF inválido!";
-    alertState.statusCode = 400; // Bad Request
-    isLoading.value = false;
-    return;
-  }
-
-  if (form.whatsapp.replace(/\D/g, "").length !== 11) {
-    alertState.error = true;
-    alertState.message = "Número de celular inválido!";
-    alertState.statusCode = 400; // Bad Request
-    isLoading.value = false;
-    return;
-  }
-
-  try {
-    const response = await fetch(import.meta.env.VITE_API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-
-    let result;
-    try {
-      result = await response.json();
-    } catch (error) {
-      // In case parsing fails, set a default message
-      result = { message: "Resposta inesperada do servidor." };
-    }
-
-    if (response.ok) {
-      alertState.error = false;
-      alertState.message = "Formulário enviado com sucesso!";
-      alertState.statusCode = response.status;
-
-      // Use optional chaining to avoid errors if modalRef.value is null
-      modalRef.value?.openModal();
-      resetForm();
-    } else {
-      alertState.error = true;
-      alertState.message =
-        result.message || `Erro ${response.status}: ${response.statusText}`;
-      alertState.statusCode = response.status;
-    }
-  } catch (error) {
-    console.error("Erro ao enviar formulário:", error);
-    alertState.error = true;
-    alertState.message = "Erro inesperado. Tente novamente mais tarde.";
-    alertState.statusCode = 500;
-  } finally {
-    isLoading.value = false;
-  }
-}
-
-const updateCPF = (): void => {
-  form.cpf = formatCPF(form.cpf);
-};
-
-const updateWhatsApp = (): void => {
-  form.whatsapp = formatWhatsApp(form.whatsapp);
-};
+const { handleSubmit, updateCPF, updateWhatsApp } = useFormUtils(form, alertState, isLoading, resetForm, modalRef);
 </script>
 
 <template>
