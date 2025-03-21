@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Title from "./components/TitleComponent.vue";
-import Form from "./components/FormComponent.vue";
+import Title from "@/components/TitleComponent.vue";
+import Form from "@/components/FormComponent.vue";
 </script>
 
 <template>
