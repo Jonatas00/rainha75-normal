@@ -82,6 +82,14 @@ async function handleSubmit(): Promise<void> {
     return;
   }
 
+  if (form.whatsapp.replace(/\D/g, "").length !== 11) {
+    alertState.error = true;
+    alertState.message = "Número de celular inválido!";
+    alertState.statusCode = 400; // Bad Request
+    isLoading.value = false;
+    return;
+  }
+
   try {
     const response = await fetch(import.meta.env.VITE_API_URL, {
       method: "POST",
