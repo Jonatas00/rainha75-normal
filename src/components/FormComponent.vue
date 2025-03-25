@@ -50,21 +50,26 @@ const { handleSubmit, updateCPF, updateWhatsApp } = useFormUtils(form, alertStat
       </div>
 
       <div>
-        <label for="anoFormacao">Ano que se formou no Rainha</label>
-        <input id="anoFormacao" max="2024" v-model="form.dataFormacao" class="p-2 w-full" placeholder="Ex: 2005"
-          type="number" inputmode="numeric" required />
+        <label for="anoFormacao">
+          Ano que se formou no Rainha <span class="opcional">*Opcional</span>
+        </label>
+        <input id="anoFormacao" min="1950" max="2024" v-model="form.dataFormacao" class="p-2 w-full"
+          placeholder="Ex: 2005" type="number" inputmode="numeric" />
       </div>
 
       <div>
         <label for="anoSaida">
-          Caso não tenha terminado o ensino médio no Rainha, qual ano saiu do colégio?
+          Caso não tenha terminado o ensino médio no Rainha, qual ano saiu do colégio? <span
+            class="opcional">*Opcional</span>
         </label>
-        <input id="anoSaida" max="2024" v-model="form.dataSaida" placeholder="Ex: 2005" class="p-2 w-full" type="number"
-          inputmode="numeric" required />
+        <input id="anoSaida" min="1950" max="2024" v-model="form.dataSaida" placeholder="Ex: 2005" class="p-2 w-full"
+          type="number" inputmode="numeric" />
       </div>
 
       <div>
-        <label for="possuiFilho">Possui filho matriculado no Rainha?</label>
+        <label for="possuiFilho">
+          Possui filho matriculado no Rainha?
+        </label>
         <select id="possuiFilho" v-model="form.filhoMatriculado" class="p-2 w-full border block">
           <option value="" disabled>Selecione uma opção</option>
           <option value="Sim">Sim</option>
@@ -93,5 +98,10 @@ input::placeholder {
 
 option[disabled] {
   @apply text-neutral-300;
+}
+
+.opcional {
+  opacity: 0.5;
+  font-size: 11px;
 }
 </style>
