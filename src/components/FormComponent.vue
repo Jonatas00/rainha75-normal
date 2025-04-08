@@ -59,7 +59,7 @@ const { handleSubmit, updateCPF, updateWhatsApp } = useFormUtils(form, alertStat
 
       <div>
         <label for="anoSaida">
-          Caso não tenha terminado o ensino médio no Rainha, qual ano saiu do colégio? 
+          Caso não tenha terminado o Ensino Médio no Rainha, em que ano saiu do Colégio?
         </label>
         <input id="anoSaida" min="1950" max="2024" v-model="form.dataSaida" placeholder="Ex: 2005" class="p-2 w-full"
           type="number" inputmode="numeric" />
