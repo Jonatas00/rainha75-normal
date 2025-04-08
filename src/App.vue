@@ -4,7 +4,7 @@ import Form from "@/components/FormComponent.vue";
 </script>
 
 <template>
-  <div class="md:max-w-[90%] lg:max-w-[60%] m-auto">
+  <div class="md:max-w-[100%] lg:max-w-[1200px] m-auto">
     <Title />
     <Form />
   </div>
