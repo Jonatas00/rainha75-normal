@@ -2,7 +2,7 @@
   <header class="non-draggable pointer-events-none">
 
     <img src="../assets/banner.jpeg" alt="Banner-rainha">
-    <div class="text-justify py-8 space-y-1 max-w-[90%] lg:max-w mx-auto">
+    <div class="text-justify space-y-1 max-w-[90%] lg:max-w mx-auto">
 
       <p>Neste ano completamos 75 anos de história!</p>
       <p>
@@ -13,7 +13,7 @@
     </div>
   </header>
 </template>
-<style>
+<style scoped>
 .non-draggable {
   user-select: none;
   -webkit-user-drag: none;
