@@ -51,7 +51,7 @@ const { handleSubmit, updateCPF, updateWhatsApp } = useFormUtils(form, alertStat
 
       <div>
         <label for="anoFormacao">
-          Ano que se formou no Rainha
+          Ano em que se formou no Rainha
         </label>
         <input id="anoFormacao" min="1950" max="2024" v-model="form.dataFormacao" class="p-2 w-full"
           placeholder="Ex: 2005" type="number" inputmode="numeric" />
