@@ -4,12 +4,14 @@
     <img src="../assets/banner.jpeg" alt="Banner-rainha">
     <div class="text-justify space-y-1 max-w-[90%] lg:max-w mx-auto">
 
-      <p>Neste ano completamos 75 anos de história!</p>
+
       <p>
         Com alegria, convidamos você, que fez e ainda faz parte da nossa trajetória, para partilharmos desse momento
-        especial, no dia 09 de agosto 2025, das 9h às 13h, aqui no colégio Rainha da Paz.
+        especial!
       </p>
-      <p>Por gentileza, preencha o formulário para que possamos te enviar o convite.</p>
+      <p>
+        Será no dia 09 de agosto 2025, das 10h às 12h, aqui no Colégio Rainha da Paz.
+      </p>
     </div>
   </header>
 </template>
